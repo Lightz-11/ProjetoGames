@@ -1,7 +1,9 @@
 package br.com.tech4me.games.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,39 +16,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tech4me.games.model.Game;
+import br.com.tech4me.games.service.GameService;
 
 @RestController
-@RequestMapping("/game")
+@RequestMapping("/games")
 public class GameController {
+
+    @Autowired
+    private GameService service;
     
     @PostMapping
     public ResponseEntity<Game> CreateGame(@RequestBody Game game)
     {
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(service.createGame(game), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Game>> GetGames()
     {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(service.getGames(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Game> GetGameById(@PathVariable String id)
     {
-        return new ResponseEntity<>(HttpStatus.FOUND);
+        Optional<Game> gameAntigo = service.getGameById(id);
+
+        if (gameAntigo.isPresent()) {
+            return new ResponseEntity<>(gameAntigo.get(), HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Game> UpdateGame(@PathVariable String id, Game game )
     {
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        Optional<Game> antigoGame = service.editGameById(id, game);
+
+        if (antigoGame.isPresent()) {
+            return new ResponseEntity<>(antigoGame.get(), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> DeleteGame(@PathVariable String id)
+    public ResponseEntity<Game> DeleteGame(@PathVariable String id)
     {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Optional<Game> antigoGame = service.getGameById(id);
+        service.deleteGameById(id);
+
+        if (antigoGame.isPresent()) {
+            return new ResponseEntity<>(antigoGame.get(), HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
