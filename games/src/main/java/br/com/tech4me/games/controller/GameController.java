@@ -50,16 +50,12 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Game> UpdateGame(@PathVariable String id, Game game )
-    {
-        Optional<Game> antigoGame = service.editGameById(id, game);
-        //Optional<Game> antigoGame = Optional.of(game);
+    public ResponseEntity<Game> editGameById(@PathVariable String id, @RequestBody Game game) {
 
-        if (antigoGame.isPresent()) {
-            return new ResponseEntity<>(antigoGame.get(), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
+        Optional<Game> antigoGame = service.editGameById(id, game);
+
+        return new ResponseEntity<>(antigoGame.get(), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")
