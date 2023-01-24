@@ -53,6 +53,7 @@ public class GameController {
     public ResponseEntity<Game> UpdateGame(@PathVariable String id, Game game )
     {
         Optional<Game> antigoGame = service.editGameById(id, game);
+        //Optional<Game> antigoGame = Optional.of(game);
 
         if (antigoGame.isPresent()) {
             return new ResponseEntity<>(antigoGame.get(), HttpStatus.CREATED);
@@ -68,7 +69,7 @@ public class GameController {
         service.deleteGameById(id);
 
         if (antigoGame.isPresent()) {
-            return new ResponseEntity<>(antigoGame.get(), HttpStatus.FOUND);
+            return new ResponseEntity<>(HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

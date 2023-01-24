@@ -34,12 +34,12 @@ public class GameServiceImp implements GameService{
     public Optional<Game> editGameById(String id, Game game) {
   
       Optional<Game> gameAntigo = repo.findById(id);
-  
+
       if (gameAntigo.isPresent()) {
-        game.setId(id);
-        return Optional.of(repo.save(game));
+          game.setId(id);
+          return Optional.of(repo.save(game));
       } else {
-        return Optional.empty();
+          return Optional.empty();
       }
     }
   

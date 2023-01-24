@@ -2,13 +2,13 @@ package br.com.tech4me.games.model;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("/game")
 public class Game {
 
-    @Autowired
+    @Id
     private String id;
     private String name;
     private double price;
