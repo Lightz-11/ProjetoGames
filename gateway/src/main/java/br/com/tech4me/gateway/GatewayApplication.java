@@ -1,15 +1,14 @@
-package br.com.tech4me.pedidos;
+package br.com.tech4me.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-public class PedidosApplication {
+public class GatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PedidosApplication.class, args);
+		SpringApplication.run(GatewayApplication.class, args);
 	}
 
 }
