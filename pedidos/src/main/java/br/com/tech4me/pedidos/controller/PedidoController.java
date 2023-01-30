@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tech4me.pedidos.model.Pedido;
 import br.com.tech4me.pedidos.service.PedidoService;
+import br.com.tech4me.pedidos.shared.PedidoDto;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -26,21 +26,21 @@ public class PedidoController {
     private PedidoService service;
     
     @PostMapping
-    public ResponseEntity<Pedido> CreatePedido(@RequestBody Pedido pedido)
+    public ResponseEntity<PedidoDto> CreatePedido(@RequestBody PedidoDto pedido)
     {
         return new ResponseEntity<>(service.createPedido(pedido), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Pedido>> GetPedidos()
+    public ResponseEntity<List<PedidoDto>> GetPedidos()
     {
         return new ResponseEntity<>(service.getPedidos(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> GetPedidoById(@PathVariable String id)
+    public ResponseEntity<PedidoDto> GetPedidoById(@PathVariable String id)
     {
-        Optional<Pedido> pedidoAntigo = service.getPedidoById(id);
+        Optional<PedidoDto> pedidoAntigo = service.getPedidoById(id);
 
         if (pedidoAntigo.isPresent()) {
             return new ResponseEntity<>(pedidoAntigo.get(), HttpStatus.FOUND);
@@ -50,9 +50,9 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> UpdatePedido(@PathVariable String id, Pedido pedido )
+    public ResponseEntity<PedidoDto> UpdatePedido(@PathVariable String id, PedidoDto pedido )
     {
-        Optional<Pedido> antigoPedido = service.editPedidoById(id, pedido);
+        Optional<PedidoDto> antigoPedido = service.editPedidoById(id, pedido);
 
         if (antigoPedido.isPresent()) {
             return new ResponseEntity<>(antigoPedido.get(), HttpStatus.CREATED);
@@ -62,9 +62,9 @@ public class PedidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Pedido> DeletePedido(@PathVariable String id)
+    public ResponseEntity<PedidoDto> DeletePedido(@PathVariable String id)
     {
-        Optional<Pedido> antigoPedido = service.getPedidoById(id);
+        Optional<PedidoDto> antigoPedido = service.getPedidoById(id);
         service.deletePedidoById(id);
 
         if (antigoPedido.isPresent()) {

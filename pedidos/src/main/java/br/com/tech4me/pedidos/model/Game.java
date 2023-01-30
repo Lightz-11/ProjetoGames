@@ -1,4 +1,4 @@
-package main.java.br.com.tech4me.pedidos.model;
+package br.com.tech4me.pedidos.model;
 
 import java.util.List;
 

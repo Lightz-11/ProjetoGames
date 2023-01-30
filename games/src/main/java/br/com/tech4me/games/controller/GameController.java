@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tech4me.games.model.Game;
 import br.com.tech4me.games.service.GameService;
+import br.com.tech4me.games.shared.GameDto;
 
 @RestController
 @RequestMapping("/games")
@@ -26,21 +26,21 @@ public class GameController {
     private GameService service;
     
     @PostMapping
-    public ResponseEntity<Game> CreateGame(@RequestBody Game game)
+    public ResponseEntity<GameDto> CreateGame(@RequestBody GameDto game)
     {
         return new ResponseEntity<>(service.createGame(game), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Game>> GetGames()
+    public ResponseEntity<List<GameDto>> GetGames()
     {
         return new ResponseEntity<>(service.getGames(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> GetGameById(@PathVariable String id)
+    public ResponseEntity<GameDto> GetGameById(@PathVariable String id)
     {
-        Optional<Game> gameAntigo = service.getGameById(id);
+        Optional<GameDto> gameAntigo = service.getGameById(id);
 
         if (gameAntigo.isPresent()) {
             return new ResponseEntity<>(gameAntigo.get(), HttpStatus.FOUND);
@@ -50,18 +50,18 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Game> editGameById(@PathVariable String id, @RequestBody Game game) {
+    public ResponseEntity<GameDto> editGameById(@PathVariable String id, @RequestBody GameDto game) {
 
-        Optional<Game> antigoGame = service.editGameById(id, game);
+        Optional<GameDto> antigoGame = service.editGameById(id, game);
 
         return new ResponseEntity<>(antigoGame.get(), HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Game> DeleteGame(@PathVariable String id)
+    public ResponseEntity<GameDto> DeleteGame(@PathVariable String id)
     {
-        Optional<Game> antigoGame = service.getGameById(id);
+        Optional<GameDto> antigoGame = service.getGameById(id);
         service.deleteGameById(id);
 
         if (antigoGame.isPresent()) {

@@ -3,17 +3,17 @@ package br.com.tech4me.pedidos.service;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.tech4me.pedidos.model.Pedido;
+import br.com.tech4me.pedidos.shared.PedidoDto;
 
 public interface PedidoService {
 
-    Pedido createPedido(Pedido pedido);
+    PedidoDto createPedido(PedidoDto dto);
 
-    public List<Pedido> getPedidos();
+    public List<PedidoDto> getPedidos();
 
-    public Optional<Pedido> getPedidoById(String id);
+    public Optional<PedidoDto> getPedidoById(String id);
 
-    Optional<Pedido> editPedidoById(String id, Pedido pedido);
+    Optional<PedidoDto> editPedidoById(String id, PedidoDto pedido);
 
     void deletePedidoById(String id);
     

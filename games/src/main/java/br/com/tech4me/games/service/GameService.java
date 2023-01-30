@@ -3,17 +3,17 @@ package br.com.tech4me.games.service;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.tech4me.games.model.Game;
+import br.com.tech4me.games.shared.GameDto;
 
 public interface GameService {
 
-    Game createGame(Game game);
+    GameDto createGame(GameDto dto);
 
-    public List<Game> getGames();
+    public List<GameDto> getGames();
 
-    public Optional<Game> getGameById(String id);
+    public Optional<GameDto> getGameById(String id);
 
-    Optional<Game> editGameById(String id, Game game);
+    Optional<GameDto> editGameById(String id, GameDto dto);
 
     void deleteGameById(String id);
     
