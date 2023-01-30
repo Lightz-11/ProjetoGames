@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tech4me.games.service.GameService;
 import br.com.tech4me.games.shared.GameDto;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/games")
@@ -26,7 +27,7 @@ public class GameController {
     private GameService service;
     
     @PostMapping
-    public ResponseEntity<GameDto> CreateGame(@RequestBody GameDto game)
+    public ResponseEntity<GameDto> CreateGame(@Valid@RequestBody GameDto game)
     {
         return new ResponseEntity<>(service.createGame(game), HttpStatus.CREATED);
     }
@@ -50,7 +51,7 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameDto> editGameById(@PathVariable String id, @RequestBody GameDto game) {
+    public ResponseEntity<GameDto> editGameById(@Valid@PathVariable String id, @RequestBody GameDto game) {
 
         Optional<GameDto> antigoGame = service.editGameById(id, game);
 
