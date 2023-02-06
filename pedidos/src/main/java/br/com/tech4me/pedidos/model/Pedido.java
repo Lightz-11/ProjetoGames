@@ -2,22 +2,13 @@ package br.com.tech4me.pedidos.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-
 @Document("/pedidos")
 public class Pedido {
 
     @Id
     private String id;
-    @NotBlank(message = "")
-    @NotNull(message = "")
     private String cliente;
-    @NotBlank(message = "")
-    @NotNull(message = "")
     private String gameId;
-    @PositiveOrZero(message = "")
     private double price;
     
     public String getId() {

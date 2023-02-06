@@ -46,20 +46,21 @@ public class PedidoServiceImpl implements PedidoService{
 
       }
     }
-  
     @Override
     public Optional<PedidoDto> editPedidoById(String id, PedidoDto dto) {
-  
-      Optional<Pedido> pedidoAntigo = repo.findById(id);
+       Optional<Pedido> pedidoAntigo = repo.findById(id);
+        
+        if(pedidoAntigo.isPresent()){
+            dto.setId(id);
+            Pedido pedidoRetorno = new ModelMapper().map(dto, Pedido.class);
+            repo.save(pedidoRetorno);
 
-      if (pedidoAntigo.isPresent()) {
-        dto.setId(id);
-        repo.save(new ModelMapper().map(dto, Pedido.class));
-        return Optional.of(dto);
+            return Optional.of(new ModelMapper().map(pedidoRetorno, PedidoDto.class));
+            
+        }else{
+            return Optional.empty();
+        }
 
-      } else {
-        return Optional.empty();
-      }
     }
 
     

@@ -51,7 +51,7 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameDto> editGameById(@Valid@PathVariable String id, @RequestBody GameDto game) {
+    public ResponseEntity<GameDto> editGameById(@Valid @PathVariable String id, @RequestBody GameDto game) {
 
         Optional<GameDto> antigoGame = service.editGameById(id, game);
 

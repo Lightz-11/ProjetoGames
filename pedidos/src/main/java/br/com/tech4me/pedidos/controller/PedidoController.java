@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tech4me.pedidos.service.PedidoService;
 import br.com.tech4me.pedidos.shared.PedidoDto;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -26,7 +27,7 @@ public class PedidoController {
     private PedidoService service;
     
     @PostMapping
-    public ResponseEntity<PedidoDto> CreatePedido(@RequestBody PedidoDto pedido)
+    public ResponseEntity<PedidoDto> CreatePedido(@Valid @RequestBody PedidoDto pedido)
     {
         return new ResponseEntity<>(service.createPedido(pedido), HttpStatus.CREATED);
     }
@@ -50,15 +51,12 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoDto> UpdatePedido(@PathVariable String id, PedidoDto pedido )
-    {
-        Optional<PedidoDto> antigoPedido = service.editPedidoById(id, pedido);
+    public ResponseEntity<PedidoDto> editGameById(@Valid@PathVariable String id, @RequestBody PedidoDto pedido) {
 
-        if (antigoPedido.isPresent()) {
-            return new ResponseEntity<>(antigoPedido.get(), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
+        Optional<PedidoDto> pedidoAntigo = service.editPedidoById(id, pedido);
+
+        return new ResponseEntity<>(pedidoAntigo.get(), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

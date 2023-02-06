@@ -49,17 +49,19 @@ public class GameServiceImp implements GameService{
   
     @Override
     public Optional<GameDto> editGameById(String id, GameDto dto) {
-  
-      Optional<Game> gameAntigo = repo.findById(id);
+       Optional<Game> pedidoAntigo = repo.findById(id);
+        
+        if(pedidoAntigo.isPresent()){
+            dto.setId(id);
+            Game pedidoRetorno = new ModelMapper().map(dto, Game.class);
+            repo.save(pedidoRetorno);
 
-      if (gameAntigo.isPresent()) {
-        dto.setId(id);
-        repo.save(new ModelMapper().map(dto, Game.class));
-        return Optional.of(dto);
+            return Optional.of(new ModelMapper().map(pedidoRetorno, GameDto.class));
+            
+        }else{
+            return Optional.empty();
+        }
 
-      } else {
-        return Optional.empty();
-      }
     }
   
     @Override
