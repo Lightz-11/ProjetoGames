@@ -3,6 +3,7 @@ package br.com.tech4me.pedidos.service;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.tech4me.pedidos.shared.PedidoCompDto;
 import br.com.tech4me.pedidos.shared.PedidoDto;
 
 public interface PedidoService {
@@ -11,7 +12,7 @@ public interface PedidoService {
 
     public List<PedidoDto> getPedidos();
 
-    public Optional<PedidoDto> getPedidoById(String id);
+    public Optional<PedidoCompDto> getPedidoById(String id);
 
     Optional<PedidoDto> editPedidoById(String id, PedidoDto pedido);
 

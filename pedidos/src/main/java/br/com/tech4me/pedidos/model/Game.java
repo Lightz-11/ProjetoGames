@@ -3,6 +3,7 @@ package br.com.tech4me.pedidos.model;
 import java.util.List;
 
 public class Game {
+    
     private String id;
     private String name;
     private double price;

@@ -9,6 +9,6 @@ import br.com.tech4me.pedidos.model.Game;
 
 @FeignClient("games")
 public interface GameClient {
-    @RequestMapping(method = RequestMethod.GET,value = "/pedidos/{id}")
+    @RequestMapping(method = RequestMethod.GET,value = "/games/{id}")
     Game obterGame(@PathVariable String id);
 }

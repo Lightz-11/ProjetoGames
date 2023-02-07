@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tech4me.pedidos.service.PedidoService;
+import br.com.tech4me.pedidos.shared.PedidoCompDto;
 import br.com.tech4me.pedidos.shared.PedidoDto;
 import jakarta.validation.Valid;
 
@@ -39,15 +40,15 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PedidoDto> GetPedidoById(@PathVariable String id)
+    public ResponseEntity<PedidoCompDto> obterPedidoPorId(@PathVariable String id)
     {
-        Optional<PedidoDto> pedidoAntigo = service.getPedidoById(id);
-
-        if (pedidoAntigo.isPresent()) {
-            return new ResponseEntity<>(pedidoAntigo.get(), HttpStatus.FOUND);
-        } else {
+        Optional<PedidoCompDto> retorno = service.getPedidoById(id);
+        
+        if(retorno.isPresent()){
+            return new ResponseEntity<>(retorno.get(), HttpStatus.FOUND);
+        }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        }    
     }
 
     @PutMapping("/{id}")
@@ -62,7 +63,7 @@ public class PedidoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<PedidoDto> DeletePedido(@PathVariable String id)
     {
-        Optional<PedidoDto> antigoPedido = service.getPedidoById(id);
+        Optional<PedidoCompDto> antigoPedido = service.getPedidoById(id);
         service.deletePedidoById(id);
 
         if (antigoPedido.isPresent()) {
