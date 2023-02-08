@@ -44,7 +44,7 @@ public class GameController {
         Optional<GameDto> gameAntigo = service.getGameById(id);
 
         if (gameAntigo.isPresent()) {
-            return new ResponseEntity<>(gameAntigo.get(), HttpStatus.FOUND);
+            return new ResponseEntity<>(gameAntigo.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
