@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tech4me.pedidos.httpClient.GameClient;
+import br.com.tech4me.pedidos.model.Game;
 import br.com.tech4me.pedidos.model.Pedido;
 import br.com.tech4me.pedidos.repository.PedidoRepository;
 import br.com.tech4me.pedidos.shared.PedidoCompDto;
@@ -24,11 +25,16 @@ public class PedidoServiceImpl implements PedidoService{
     private GameClient gameClient;
   
     @Override
-    public PedidoDto createPedido(PedidoDto dto) {
+    public Optional<PedidoDto> createPedido(PedidoDto dto) {
+
+      Game game = gameClient.obterGame(dto.getGameId());
+
+      dto.setPrice(game.getPrice());
 
       Pedido pedido = new ModelMapper().map(dto, Pedido.class);
       repo.save(pedido);
-      return new ModelMapper().map(pedido, PedidoDto.class);
+      return Optional.of(new ModelMapper().map(pedido, PedidoDto.class));
+
     }
   
     @Override
@@ -43,9 +49,7 @@ public class PedidoServiceImpl implements PedidoService{
 
       if(pedido.isPresent()){
           PedidoCompDto pedidoCompleto = new ModelMapper().map(pedido, PedidoCompDto.class);
-          //Game gam = (gameClient.obterGame(pedidoCompleto.getGameId()));
           pedidoCompleto.setGame(gameClient.obterGame(pedidoCompleto.getGameId()));
-          //pedidoCompleto.setGame(new Game());
           return Optional.of(pedidoCompleto);
       }else{
           return Optional.empty();
@@ -62,7 +66,7 @@ public class PedidoServiceImpl implements PedidoService{
 
             return Optional.of(new ModelMapper().map(pedidoRetorno, PedidoDto.class));
             
-        }else{
+        } else{
             return Optional.empty();
         }
 

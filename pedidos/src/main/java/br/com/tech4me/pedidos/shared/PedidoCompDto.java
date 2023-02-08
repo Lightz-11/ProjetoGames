@@ -3,8 +3,8 @@ package br.com.tech4me.pedidos.shared;
 import br.com.tech4me.pedidos.model.Game;
 
 public class PedidoCompDto {
+    
     private String id;
-
     private String cliente;
     private String gameId;
     private double price;

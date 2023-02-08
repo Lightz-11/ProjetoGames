@@ -8,7 +8,7 @@ import br.com.tech4me.pedidos.shared.PedidoDto;
 
 public interface PedidoService {
 
-    PedidoDto createPedido(PedidoDto dto);
+    Optional<PedidoDto> createPedido(PedidoDto dto);
 
     public List<PedidoDto> getPedidos();
 
